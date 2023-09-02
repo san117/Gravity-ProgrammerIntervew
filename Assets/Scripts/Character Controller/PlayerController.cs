@@ -12,6 +12,18 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     #endregion
 
+    private static PlayerController _singleton;
+    public static PlayerController Singleton
+    {
+        get
+        {
+            if (_singleton == null)
+                _singleton = FindObjectOfType<PlayerController>();
+
+            return _singleton;
+        }
+    }
+
     private Vector2 _targetVelocity;
     private Vector2 _animatorSpeed;
 

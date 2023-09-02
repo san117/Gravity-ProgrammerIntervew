@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    #region Fields
     [SerializeField] private InputActionAsset _playerControls;
     [SerializeField] private PlayerController _playerController;
+    #endregion
 
     #region Unity
     void Start()
