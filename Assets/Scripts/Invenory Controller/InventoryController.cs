@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Linq;
 
 public class InventoryController : MonoBehaviour
 {
     private const int WIDTH = 4;
+    private const int MAX_EQUIPMENT_SLOTS = 3;
 
     #region Fields
     [Header("Settings")]
-    [SerializeField] private ItemModel[] _startKit;
+    [SerializeField] private InventoryModel _playerInventory;
+    [SerializeField] private InventoryModel _playerEquip;
 
     [Header("Components")]
+    [SerializeField] private InventorySlotView[] _equipSlots;
     [SerializeField] private InventorySlotView[] _slots;
     [SerializeField] private Image _draggedItem_image;
 
@@ -41,14 +45,9 @@ public class InventoryController : MonoBehaviour
     #region Unity
     private void Start()
     {
-        foreach (var item in _startKit)
-        {
-            AddItem(item);
-        }
-
         _anim = GetComponent<Animator>();
     }
-
+    
     private void Update()
     {
         if (_dragItemInfo != null)
@@ -60,6 +59,20 @@ public class InventoryController : MonoBehaviour
         {
             _draggedItem_image.gameObject.SetActive(false);
         }
+    }
+
+    private void OnEnable()
+    {
+        InitInventory();
+    }
+
+    private void OnDisable()
+    {
+        var allInventoryItems = _slots.Select(x => x.CurrentItem).ToList();
+        _playerInventory.inventory = allInventoryItems;
+
+        var allEquipment = _equipSlots.Select(x => x.CurrentItem).ToList();
+        _playerEquip.inventory = allEquipment;
     }
     #endregion
 
@@ -224,5 +237,23 @@ public class InventoryController : MonoBehaviour
         return null;
     }
 
+    private void InitInventory()
+    {
+        for (int i = 0; i < _playerInventory.inventory.Count; i++)
+        {
+            if (i == _slots.Length)
+                break;
+
+            _slots[i].SetItem(_playerInventory.inventory[i]);
+        }
+
+        for (int i = 0; i < _playerEquip.inventory.Count; i++)
+        {
+            _equipSlots[i].SetItem(_playerEquip.inventory[i]);
+
+            if (i == MAX_EQUIPMENT_SLOTS - 1)
+                break;
+        }
+    }
     #endregion
 }
