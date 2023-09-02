@@ -46,6 +46,8 @@ public class InventoryController : MonoBehaviour
     private void Start()
     {
         _anim = GetComponent<Animator>();
+
+        SetDisplay(false);
     }
     
     private void Update()

@@ -15,6 +15,8 @@ public class PlayerInputHandler : MonoBehaviour
     {
         _playerControls.FindActionMap("Gameplay").FindAction("Inventory").performed += InventoryButtonPressed;
         _playerControls.FindActionMap("UI").FindAction("Inventory").performed += InventoryButtonPressed;
+
+        _playerControls.FindActionMap("UI").Disable();
     }
 
     private void InventoryButtonPressed(InputAction.CallbackContext obj)
@@ -26,9 +28,15 @@ public class PlayerInputHandler : MonoBehaviour
         inventoryController.SetDisplay(isDisplaying);
 
         if(isDisplaying)
+        {
             _playerControls.FindActionMap("Gameplay").Disable();
+            _playerControls.FindActionMap("UI").Enable();
+        }
         else
+        {
             _playerControls.FindActionMap("Gameplay").Enable();
+            _playerControls.FindActionMap("UI").Disable();
+        }
     }
 
     void Update()
