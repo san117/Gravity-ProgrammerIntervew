@@ -13,7 +13,22 @@ public class PlayerInputHandler : MonoBehaviour
     #region Unity
     void Start()
     {
+        _playerControls.FindActionMap("Gameplay").FindAction("Inventory").performed += InventoryButtonPressed;
+        _playerControls.FindActionMap("UI").FindAction("Inventory").performed += InventoryButtonPressed;
+    }
 
+    private void InventoryButtonPressed(InputAction.CallbackContext obj)
+    {
+        var inventoryController = FindObjectOfType<InventoryController>(true);
+
+        var isDisplaying = !inventoryController.IsDisplaying;
+
+        inventoryController.SetDisplay(isDisplaying);
+
+        if(isDisplaying)
+            _playerControls.FindActionMap("Gameplay").Disable();
+        else
+            _playerControls.FindActionMap("Gameplay").Enable();
     }
 
     void Update()

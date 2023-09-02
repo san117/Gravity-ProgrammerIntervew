@@ -16,6 +16,12 @@ public class InventoryController : MonoBehaviour
     [SerializeField] private InventorySlotView[] _slots;
     [SerializeField] private Image _draggedItem_image;
 
+    private bool _isDisplaying;
+
+    private Animator _anim;
+
+    public bool IsDisplaying => _isDisplaying;
+
     private class DragItemInfo
     {
         public ItemModel draggedItem;
@@ -39,6 +45,8 @@ public class InventoryController : MonoBehaviour
         {
             AddItem(item);
         }
+
+        _anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -56,11 +64,20 @@ public class InventoryController : MonoBehaviour
     #endregion
 
     #region Public
+    public void SetDisplay(bool isActive)
+    {
+        _isDisplaying = isActive;
+
+        _anim.SetBool("IsOpen", _isDisplaying);
+    }
+
     public void StartDrag(InventorySlotView slot)
     {
-        _dragItemInfo = new DragItemInfo(slot.CurrentItem, slot);
-        
-        slot.SetItem(null);
+        if(slot.CurrentItem != null)
+        {
+            _dragItemInfo = new DragItemInfo(slot.CurrentItem, slot);
+            slot.SetItem(null);
+        }
     }
 
     public void Drag(BaseEventData data)
@@ -82,45 +99,54 @@ public class InventoryController : MonoBehaviour
             position = pointerData.position
         }, raycastResults);
 
-        foreach (RaycastResult result in raycastResults)
+        if(raycastResults.Count == 0)
         {
-            InventorySlotView hitInventorySlot = result.gameObject.GetComponent<InventorySlotView>();
-
-            if (hitInventorySlot != null)
+            if (_dragItemInfo != null)
+                _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
+        }
+        else
+        {
+            foreach (RaycastResult result in raycastResults)
             {
-                if (hitInventorySlot is InventorySlotTrash)
+                InventorySlotView hitInventorySlot = result.gameObject.GetComponent<InventorySlotView>();
+
+                if (hitInventorySlot != null)
                 {
-                    hitInventorySlot.SetItem(_dragItemInfo.draggedItem);
+                    if (hitInventorySlot is InventorySlotTrash)
+                    {
+                        if (_dragItemInfo != null)
+                            hitInventorySlot.SetItem(_dragItemInfo.draggedItem);
+                    }
+                    else
+                    {
+                        if (_dragItemInfo != null)
+                        {
+                            if (hitInventorySlot.IsAllowed(_dragItemInfo.draggedItem))
+                            {
+                                if (hitInventorySlot.IsEmpty)
+                                {
+                                    hitInventorySlot.SetItem(_dragItemInfo.draggedItem);
+                                }
+                                else
+                                {
+                                    MoveItem(_dragItemInfo.draggedItem, _dragItemInfo.from, hitInventorySlot);
+                                }
+                            }
+                            else
+                            {
+                                _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
+                            }
+
+                            _dragItemInfo = null;
+                            return;
+                        }
+                    }
                 }
                 else
                 {
                     if (_dragItemInfo != null)
-                    {
-                        if (hitInventorySlot.IsAllowed(_dragItemInfo.draggedItem))
-                        {
-                            if (hitInventorySlot.IsEmpty)
-                            {
-                                hitInventorySlot.SetItem(_dragItemInfo.draggedItem);
-                            }
-                            else
-                            {
-                                MoveItem(_dragItemInfo.draggedItem, _dragItemInfo.from, hitInventorySlot);
-                            }
-                        }
-                        else
-                        {
-                            _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
-                        }
-
-                        _dragItemInfo = null;
-                        return;
-                    }
+                        _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
                 }
-            }
-            else
-            {
-                if (_dragItemInfo != null)
-                    _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
             }
         }
 
