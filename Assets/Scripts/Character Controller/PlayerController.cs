@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _speed = 1;
     [SerializeField] private float _damp = 1;
     [SerializeField] private int _money = 10;
+    [SerializeField] private float _stepCooldown = 0.5f;
 
     [Header("Components")]
     [SerializeField] private TextMeshProUGUI _balanceText;
@@ -17,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InventorySlotView _headEquipmentSlot;
     [SerializeField] private InventorySlotView _chestEquipmentSlot;
     [SerializeField] private InventoryModel _playerEquipment;
+
+    private AudioSource _source;
 
     private ItemModel _headEquipment;
     private ItemModel _chestEquipment;
@@ -43,11 +46,15 @@ public class PlayerController : MonoBehaviour
     private Vector2 _targetVelocity;
     private Vector2 _animatorSpeed;
 
+    
+    private float _stepTimer;
+
     #region Unity
     private void Start()
     {
         _rb2d = gameObject.GetComponent<Rigidbody2D>();
         _animator = gameObject.GetComponent<Animator>();
+        _source = GetComponent<AudioSource>();
 
         _headEquipmentSlot._onSetItemEvent += EquipHead;
         _chestEquipmentSlot._onSetItemEvent += EquipChest;
@@ -74,11 +81,27 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (velocity.magnitude > 0.5f)
+        {
+            _stepTimer = Mathf.MoveTowards(_stepTimer, _stepCooldown, Time.deltaTime);
+
+            if (_stepTimer == _stepCooldown)
+            {
+                _source.Play();
+                _stepTimer = 0;
+            }
+        }
+
         AnimationController();
     }
     #endregion
 
     #region Public
+    public void SetStepAudio(AudioClip clip)
+    {
+        _source.clip = clip;
+    }
+
     public void Move(Vector2 axis)
     {
         _targetVelocity = axis * _speed;
