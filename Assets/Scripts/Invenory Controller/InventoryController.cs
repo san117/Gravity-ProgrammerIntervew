@@ -89,19 +89,12 @@ public class InventoryController : MonoBehaviour
 
     private void OnEnable()
     {
-        InitInventory();
+        RefreshInventory();
     }
 
     private void OnDisable()
     {
-        var allInventoryItems = _slots.Select(x => x.CurrentItem).ToList();
-        _playerInventory.inventory = allInventoryItems;
-
-        if (_playerEquip != null)
-        {
-            var allEquipment = _equipSlots.Select(x => x.CurrentItem).ToList();
-            _playerEquip.inventory = allEquipment;
-        }
+        SaveInventory();
     }
     #endregion
 
@@ -271,26 +264,8 @@ public class InventoryController : MonoBehaviour
 
         return false;
     }
-    #endregion
 
-    #region Internal
-
-    private InventorySlotView FindFirstEmptySlot()
-    {
-        for (int y = 0; y < WIDTH; y++)
-        {
-            for (int x = 0; x < WIDTH; x++)
-            {
-                var slot = GetSlot(x, y);
-                if (slot.IsEmpty)
-                    return slot;
-            }
-        }
-
-        return null;
-    }
-
-    private void InitInventory()
+    public void RefreshInventory()
     {
         for (int i = 0; i < _playerInventory.inventory.Count; i++)
         {
@@ -311,5 +286,35 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
+
+    public void SaveInventory()
+    {
+        var allInventoryItems = _slots.Select(x => x.CurrentItem).ToList();
+        _playerInventory.inventory = allInventoryItems;
+
+        if (_playerEquip != null)
+        {
+            var allEquipment = _equipSlots.Select(x => x.CurrentItem).ToList();
+            _playerEquip.inventory = allEquipment;
+        }
+    }
+    #endregion
+
+    #region Internal
+
+    private InventorySlotView FindFirstEmptySlot()
+    {
+        for (int y = 0; y < WIDTH; y++)
+        {
+            for (int x = 0; x < WIDTH; x++)
+            {
+                var slot = GetSlot(x, y);
+                if (slot.IsEmpty)
+                    return slot;
+            }
+        }
+
+        return null;
+    }  
     #endregion
 }

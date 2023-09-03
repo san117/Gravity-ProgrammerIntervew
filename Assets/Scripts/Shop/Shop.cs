@@ -72,7 +72,10 @@ public class Shop : MonoBehaviour
         PlayerController.Singleton.SubstractMoney(mercancyInfo.buyPrice);
 
         _internalInventory.AddItem(mercancyInfo.item);
+        PlayerController.Singleton.DiplayBalance(-1);
 
+        _internalInventory.SaveInventory();
+        _internalInventory.RefreshInventory();
         UpdateMercancyView();
     }
 
@@ -81,6 +84,10 @@ public class Shop : MonoBehaviour
         if (CanSell(model, out var mercancyInfo))
         {
             PlayerController.Singleton.AddMoney(mercancyInfo.sellPrice);
+            PlayerController.Singleton.DiplayBalance(-1);
+
+            _internalInventory.SaveInventory();
+            _internalInventory.RefreshInventory();
         }
     }
 

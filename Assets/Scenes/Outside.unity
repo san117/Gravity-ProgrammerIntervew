@@ -8024,8 +8024,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _aviableMercancy:
-  - buyPrice: 5
+  - buyPrice: 16
+    sellPrice: 12
+    item: {fileID: 11400000, guid: d9dd4669e6693dc4988c0d901aed70bd, type: 2}
+  - buyPrice: 9
+    sellPrice: 5
+    item: {fileID: 11400000, guid: db7ad2583159b5c40a5f963d1beccefc, type: 2}
+  - buyPrice: 12
+    sellPrice: 10
+    item: {fileID: 11400000, guid: 1c284a857e86ff049bf256dfcf82e1bc, type: 2}
+  - buyPrice: 16
+    sellPrice: 12
+    item: {fileID: 11400000, guid: fc089b1b55f60134bb0fbfe22b04a455, type: 2}
+  - buyPrice: 4
     sellPrice: 3
+    item: {fileID: 11400000, guid: 9123bdda8c301d84a96d4ae4a94a63ce, type: 2}
+  - buyPrice: 16
+    sellPrice: 13
+    item: {fileID: 11400000, guid: e6b216733bca4e84097f01bdb1996bc4, type: 2}
+  - buyPrice: 6
+    sellPrice: 2
+    item: {fileID: 11400000, guid: 53972e7c1d7182f4daed2db2510567e7, type: 2}
+  - buyPrice: 9
+    sellPrice: 6
+    item: {fileID: 11400000, guid: c95bd0eccbdca204aafd85a25f9de7b5, type: 2}
+  - buyPrice: 14
+    sellPrice: 10
     item: {fileID: 11400000, guid: 573a37552fe577041865473021bffbc1, type: 2}
   _mercancyTemplate: {fileID: 938027597}
   _content: {fileID: 1322602371}
