@@ -126,7 +126,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite sheet for Basic Pack_1
+      name: ui_panel_outline
       rect:
         serializedVersion: 2
         x: 59
@@ -135,7 +135,7 @@ TextureImporter:
         height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 12, y: 12, z: 12, w: 12}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -1239,7 +1239,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite sheet for Basic Pack_54
+      name: ui_panel_1
       rect:
         serializedVersion: 2
         x: 59
@@ -1248,7 +1248,7 @@ TextureImporter:
         height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 12, y: 12, z: 12, w: 12}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -1764,7 +1764,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite sheet for Basic Pack_79
+      name: ui_coin
       rect:
         serializedVersion: 2
         x: 629
@@ -2184,7 +2184,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite sheet for Basic Pack_99
+      name: ui_panel_3
       rect:
         serializedVersion: 2
         x: 59
@@ -2193,7 +2193,7 @@ TextureImporter:
         height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 12, y: 12, z: 12, w: 12}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -2898,7 +2898,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite sheet for Basic Pack_133
+      name: ui_coin_outline
       rect:
         serializedVersion: 2
         x: 628
@@ -2940,7 +2940,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite sheet for Basic Pack_135
+      name: ui_scrollButton_vertical_normal
       rect:
         serializedVersion: 2
         x: 277
@@ -2949,7 +2949,7 @@ TextureImporter:
         height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 3, y: 7, z: 3, w: 6}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -2982,7 +2982,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite sheet for Basic Pack_137
+      name: ui_scrollButton_vertical_slected
       rect:
         serializedVersion: 2
         x: 309
@@ -3003,7 +3003,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite sheet for Basic Pack_138
+      name: ui_scrollbar_vertical
       rect:
         serializedVersion: 2
         x: 326
@@ -3012,7 +3012,7 @@ TextureImporter:
         height: 38
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 1, z: 0, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -3024,7 +3024,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite sheet for Basic Pack_139
+      name: ui_cursor
       rect:
         serializedVersion: 2
         x: 338
@@ -6740,6 +6740,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: ui_empty
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 112
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 12, y: 12, z: 12, w: 12}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dd9e35c69ae95e43be133cccebc7719
+      internalID: 2120717993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -6752,7 +6773,6 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Sprite sheet for Basic Pack_0: -1524939339
-      Sprite sheet for Basic Pack_1: 559734841
       Sprite sheet for Basic Pack_10: -1652215924
       Sprite sheet for Basic Pack_100: -840440951
       Sprite sheet for Basic Pack_101: 1805511628
@@ -6787,13 +6807,8 @@ TextureImporter:
       Sprite sheet for Basic Pack_130: 1476602796
       Sprite sheet for Basic Pack_131: -1301555753
       Sprite sheet for Basic Pack_132: 1676518302
-      Sprite sheet for Basic Pack_133: 252883394
       Sprite sheet for Basic Pack_134: 9328696
-      Sprite sheet for Basic Pack_135: 1790330791
       Sprite sheet for Basic Pack_136: -1078845741
-      Sprite sheet for Basic Pack_137: -985408419
-      Sprite sheet for Basic Pack_138: 360387540
-      Sprite sheet for Basic Pack_139: -94920073
       Sprite sheet for Basic Pack_14: -2029565318
       Sprite sheet for Basic Pack_140: -1946250597
       Sprite sheet for Basic Pack_141: 1858349006
@@ -7011,7 +7026,6 @@ TextureImporter:
       Sprite sheet for Basic Pack_50: 1161254899
       Sprite sheet for Basic Pack_51: 1226887750
       Sprite sheet for Basic Pack_52: -1310498219
-      Sprite sheet for Basic Pack_54: -1532354244
       Sprite sheet for Basic Pack_55: -701081303
       Sprite sheet for Basic Pack_56: -291556385
       Sprite sheet for Basic Pack_57: 312598541
@@ -7038,7 +7052,6 @@ TextureImporter:
       Sprite sheet for Basic Pack_76: 934958575
       Sprite sheet for Basic Pack_77: -1976043673
       Sprite sheet for Basic Pack_78: 1028266784
-      Sprite sheet for Basic Pack_79: -420061967
       Sprite sheet for Basic Pack_8: 112011677
       Sprite sheet for Basic Pack_80: 1862167113
       Sprite sheet for Basic Pack_81: -1179103578
@@ -7060,12 +7073,21 @@ TextureImporter:
       Sprite sheet for Basic Pack_96: -1338697990
       Sprite sheet for Basic Pack_97: -1984892618
       Sprite sheet for Basic Pack_98: -1944443178
-      Sprite sheet for Basic Pack_99: -760119130
       ui_close_normal: -1935243119
       ui_close_push: -921038251
+      ui_coin: -420061967
+      ui_coin_outline: 252883394
+      ui_cursor: -94920073
       ui_dialogue: -669933827
+      ui_empty: 2120717993
       ui_panel_0: -2108069666
+      ui_panel_1: -1532354244
       ui_panel_2: 2010147013
+      ui_panel_3: -760119130
+      ui_panel_outline: 559734841
+      ui_scrollButton_vertical_normal: 1790330791
+      ui_scrollButton_vertical_slected: -985408419
+      ui_scrollbar_vertical: 360387540
       ui_wood_panel: -1157637646
   spritePackingTag: 
   pSDRemoveMatte: 0
