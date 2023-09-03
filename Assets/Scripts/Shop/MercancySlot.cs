@@ -44,7 +44,7 @@ public class MercancySlot : MonoBehaviour
 
             _mercancyIcon.sprite = _mercancyInfo.item.Icon;
             _mercancyTitle.text = _mercancyInfo.item.Title;
-            _mercancyPrice.text = "$" + _mercancyInfo.price;
+            _mercancyPrice.text = "$" + _mercancyInfo.buyPrice;
 
             var priceColor = _mercancyPrice.color;
 

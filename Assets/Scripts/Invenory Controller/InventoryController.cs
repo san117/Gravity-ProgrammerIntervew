@@ -21,6 +21,7 @@ public class InventoryController : MonoBehaviour
     [SerializeField] private Image _draggedItem_image;
 
     private bool _isDisplaying;
+    private Vector2 _pointerPos;
 
     private Animator _anim;
 
@@ -56,6 +57,29 @@ public class InventoryController : MonoBehaviour
         {
             _draggedItem_image.gameObject.SetActive(true);
             _draggedItem_image.sprite = _dragItemInfo.draggedItem.Icon;
+
+            Ray ray = Camera.main.ScreenPointToRay(_pointerPos);
+
+            List<RaycastResult> raycastResults = new List<RaycastResult>();
+
+            EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current)
+            {
+                position = _pointerPos
+            }, raycastResults);
+
+            if (raycastResults.Count > 0)
+            {
+                InventorySlotView inventorySlotViewComponent = raycastResults
+                        .Select(result => result.gameObject.GetComponent<InventorySlotView>())
+                        .FirstOrDefault(component => component != null);
+
+                if (inventorySlotViewComponent != null)
+                {
+                    if (_dragItemInfo != null)
+                        if (inventorySlotViewComponent is InventorySlotSell)
+                            (inventorySlotViewComponent as InventorySlotSell).Appraise(_dragItemInfo.draggedItem);
+                }
+            }
         }
         else
         {
@@ -73,8 +97,11 @@ public class InventoryController : MonoBehaviour
         var allInventoryItems = _slots.Select(x => x.CurrentItem).ToList();
         _playerInventory.inventory = allInventoryItems;
 
-        var allEquipment = _equipSlots.Select(x => x.CurrentItem).ToList();
-        _playerEquip.inventory = allEquipment;
+        if (_playerEquip != null)
+        {
+            var allEquipment = _equipSlots.Select(x => x.CurrentItem).ToList();
+            _playerEquip.inventory = allEquipment;
+        }
     }
     #endregion
 
@@ -83,7 +110,8 @@ public class InventoryController : MonoBehaviour
     {
         _isDisplaying = isActive;
 
-        _anim.SetBool("IsOpen", _isDisplaying);
+        if(_anim != null)
+            _anim.SetBool("IsOpen", _isDisplaying);
     }
 
     public void StartDrag(InventorySlotView slot)
@@ -98,7 +126,8 @@ public class InventoryController : MonoBehaviour
     public void Drag(BaseEventData data)
     {
         PointerEventData pointerData = (PointerEventData)data;
-        _draggedItem_image.transform.position = pointerData.position;
+        _pointerPos = pointerData.position;
+        _draggedItem_image.transform.position = _pointerPos; 
     }
 
     public void EndDrag(BaseEventData data)
@@ -121,46 +150,68 @@ public class InventoryController : MonoBehaviour
         }
         else
         {
-            foreach (RaycastResult result in raycastResults)
+            if(raycastResults.Count > 0)
             {
-                InventorySlotView hitInventorySlot = result.gameObject.GetComponent<InventorySlotView>();
+                InventorySlotView inventorySlotViewComponent = raycastResults
+                    .Select(result => result.gameObject.GetComponent<InventorySlotView>())
+                    .FirstOrDefault(component => component != null);
 
-                if (hitInventorySlot != null)
+                if (inventorySlotViewComponent != null)
                 {
-                    if (hitInventorySlot is InventorySlotTrash)
+                    if (inventorySlotViewComponent != null)
                     {
-                        if (_dragItemInfo != null)
-                            hitInventorySlot.SetItem(_dragItemInfo.draggedItem);
+                        if (inventorySlotViewComponent is InventorySlotTrash)
+                        {
+                            if (_dragItemInfo != null)
+                                inventorySlotViewComponent.SetItem(_dragItemInfo.draggedItem);
+                        }
+                        else if (inventorySlotViewComponent is InventorySlotSell)
+                        {
+                            if (_dragItemInfo != null)
+                            {
+                                var sellingSlot = (inventorySlotViewComponent as InventorySlotSell);
+
+                                if (sellingSlot.CanBeSelled(_dragItemInfo.draggedItem))
+                                {
+                                    (inventorySlotViewComponent as InventorySlotSell).SellItem(_dragItemInfo.draggedItem);
+                                    inventorySlotViewComponent.SetItem(null);
+                                }
+                                else
+                                {
+                                    _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (_dragItemInfo != null)
+                            {
+                                if (inventorySlotViewComponent.IsAllowed(_dragItemInfo.draggedItem))
+                                {
+                                    if (inventorySlotViewComponent.IsEmpty)
+                                    {
+                                        inventorySlotViewComponent.SetItem(_dragItemInfo.draggedItem);
+                                    }
+                                    else
+                                    {
+                                        MoveItem(_dragItemInfo.draggedItem, _dragItemInfo.from, inventorySlotViewComponent);
+                                    }
+                                }
+                                else
+                                {
+                                    _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
+                                }
+
+                                _dragItemInfo = null;
+                                return;
+                            }
+                        }
                     }
                     else
                     {
                         if (_dragItemInfo != null)
-                        {
-                            if (hitInventorySlot.IsAllowed(_dragItemInfo.draggedItem))
-                            {
-                                if (hitInventorySlot.IsEmpty)
-                                {
-                                    hitInventorySlot.SetItem(_dragItemInfo.draggedItem);
-                                }
-                                else
-                                {
-                                    MoveItem(_dragItemInfo.draggedItem, _dragItemInfo.from, hitInventorySlot);
-                                }
-                            }
-                            else
-                            {
-                                _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
-                            }
-
-                            _dragItemInfo = null;
-                            return;
-                        }
+                            _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
                     }
-                }
-                else
-                {
-                    if (_dragItemInfo != null)
-                        _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
                 }
             }
         }
@@ -249,12 +300,15 @@ public class InventoryController : MonoBehaviour
             _slots[i].SetItem(_playerInventory.inventory[i]);
         }
 
-        for (int i = 0; i < _playerEquip.inventory.Count; i++)
+        if (_playerEquip != null)
         {
-            _equipSlots[i].SetItem(_playerEquip.inventory[i]);
+            for (int i = 0; i < _playerEquip.inventory.Count; i++)
+            {
+                _equipSlots[i].SetItem(_playerEquip.inventory[i]);
 
-            if (i == MAX_EQUIPMENT_SLOTS - 1)
-                break;
+                if (i == MAX_EQUIPMENT_SLOTS - 1)
+                    break;
+            }
         }
     }
     #endregion
