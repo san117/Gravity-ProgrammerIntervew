@@ -26,6 +26,10 @@ public class Shop : MonoBehaviour
     [SerializeField] private InventoryController _internalInventory;
     [SerializeField] private CoinsVFX _coinsVFX;
     [SerializeField] private Transform _blacksmithNPC;
+    [SerializeField] private AudioSource _source;
+    [SerializeField] private AudioClip _spendMoney;
+    [SerializeField] private AudioClip _earnMoney;
+
     [Header("Components / Tooltip")]
     [SerializeField] private TextMeshProUGUI _tooltip_tile;
     [SerializeField] private TextMeshProUGUI _tooltip_desc;
@@ -81,6 +85,9 @@ public class Shop : MonoBehaviour
         _internalInventory.RefreshInventory();
         UpdateMercancyView();
 
+        _source.clip = _earnMoney;
+        _source.Play();
+
         var vfx = Instantiate(_coinsVFX);
 
         vfx.Init(mercancyInfo.buyPrice, 15, 100, MenuManager.Singleon.CoinBalancePosition, Camera.main.WorldToScreenPoint(_blacksmithNPC.position));
@@ -97,6 +104,9 @@ public class Shop : MonoBehaviour
             _internalInventory.RefreshInventory();
 
             UpdateMercancyView();
+
+            _source.clip = _spendMoney;
+            _source.Play();
 
             var vfx = Instantiate(_coinsVFX);
             
@@ -144,6 +154,7 @@ public class Shop : MonoBehaviour
         GetComponent<Animator>().SetBool("IsOpen", true);
         _shopOpen = true;
 
+        _internalInventory.RefreshInventory();
         PlayerController.Singleton.DiplayBalance(-1);
     }
 
@@ -151,7 +162,7 @@ public class Shop : MonoBehaviour
     {
         GetComponent<Animator>().SetBool("IsOpen", false);
         _shopOpen = false;
-
+        _internalInventory.SaveInventory();
         PlayerController.Singleton.DiplayBalance(1);
     }
     #endregion

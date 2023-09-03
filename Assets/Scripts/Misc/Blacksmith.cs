@@ -5,10 +5,12 @@ using UnityEngine;
 public class Blacksmith : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _sparks;
+    [SerializeField] private AudioSource _blink;
 
     public void HitHammer()
     {
         _sparks.Play();
+        _blink.Play();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

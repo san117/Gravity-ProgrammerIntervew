@@ -19,6 +19,7 @@ public class InventoryController : MonoBehaviour
     [SerializeField] private InventorySlotView[] _equipSlots;
     [SerializeField] private InventorySlotView[] _slots;
     [SerializeField] private Image _draggedItem_image;
+    [SerializeField] private AudioSource _source;
 
     private bool _isDisplaying;
     private Vector2 _pointerPos;
@@ -113,6 +114,8 @@ public class InventoryController : MonoBehaviour
         {
             _dragItemInfo = new DragItemInfo(slot.CurrentItem, slot);
             slot.SetItem(null);
+
+            _source.Play();
         }
     }
 
@@ -156,7 +159,10 @@ public class InventoryController : MonoBehaviour
                         if (inventorySlotViewComponent is InventorySlotTrash)
                         {
                             if (_dragItemInfo != null)
+                            {
                                 inventorySlotViewComponent.SetItem(_dragItemInfo.draggedItem);
+                                _source.Play();
+                            }
                         }
                         else if (inventorySlotViewComponent is InventorySlotSell)
                         {
@@ -168,10 +174,12 @@ public class InventoryController : MonoBehaviour
                                 {
                                     (inventorySlotViewComponent as InventorySlotSell).SellItem(_dragItemInfo.draggedItem);
                                     inventorySlotViewComponent.SetItem(null);
+                                    _source.Play();
                                 }
                                 else
                                 {
                                     _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
+                                    _source.Play();
                                 }
                             }
                         }
@@ -184,18 +192,22 @@ public class InventoryController : MonoBehaviour
                                     if (inventorySlotViewComponent.IsEmpty)
                                     {
                                         inventorySlotViewComponent.SetItem(_dragItemInfo.draggedItem);
+                                        _source.Play();
                                     }
                                     else
                                     {
                                         MoveItem(_dragItemInfo.draggedItem, _dragItemInfo.from, inventorySlotViewComponent);
+                                        _source.Play();
                                     }
                                 }
                                 else
                                 {
                                     _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
+                                    _source.Play();
                                 }
 
                                 _dragItemInfo = null;
+                                SaveInventory();
                                 return;
                             }
                         }
@@ -203,11 +215,16 @@ public class InventoryController : MonoBehaviour
                     else
                     {
                         if (_dragItemInfo != null)
+                        {
                             _dragItemInfo.from.SetItem(_dragItemInfo.draggedItem);
+                            _source.Play();
+                        }
                     }
                 }
             }
         }
+
+        SaveInventory();
 
         _dragItemInfo = null;
     }
@@ -231,7 +248,9 @@ public class InventoryController : MonoBehaviour
 
     public bool HasAviableSpace()
     {
-        return true;
+        var validItemsCount = _playerInventory.inventory.Count(x => x != null);
+
+        return validItemsCount < _slots.Length;
     }
 
     public ItemModel GetItem(int x, int y)
