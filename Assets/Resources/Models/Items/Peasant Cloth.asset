@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 297437945c545c6499493d7de2d0f2eb, type: 3}
-  m_Name: Magic Hat
+  m_Name: Peasant Cloth
   m_EditorClassIdentifier: 
-  _title: Magic Hat
-  _desc: A cute hat!
-  _icon: {fileID: 21300000, guid: 0317a15e9d5fe80479a256fcafdba1af, type: 3}
-  _flags: 4
+  _title: Rustic Attire
+  _desc: Humble, rustic fabric choice
+  _icon: {fileID: 21300000, guid: 4eedfd7341ef48e49be3f43cc0adc869, type: 3}
+  _equipLayerMask: 4
+  _flags: 1

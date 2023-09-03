@@ -8,7 +8,7 @@ using System.Linq;
 public class InventoryController : MonoBehaviour
 {
     private const int WIDTH = 4;
-    private const int MAX_EQUIPMENT_SLOTS = 3;
+    private const int MAX_EQUIPMENT_SLOTS = 2;
 
     #region Fields
     [Header("Settings")]
@@ -230,7 +230,7 @@ public class InventoryController : MonoBehaviour
 
     public void MoveItem(ItemModel model, InventorySlotView from, InventorySlotView to)
     {
-        var aux = from.CurrentItem;
+        var aux = to.CurrentItem;
 
         to.SetItem(model);
         from.SetItem(aux);

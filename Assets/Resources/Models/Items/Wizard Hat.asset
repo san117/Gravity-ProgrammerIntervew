@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 297437945c545c6499493d7de2d0f2eb, type: 3}
-  m_Name: Sword
+  m_Name: Wizard Hat
   m_EditorClassIdentifier: 
-  _title: Sword
-  _desc: Cut 'em all!
-  _icon: {fileID: 21300000, guid: f76c585a95aa16e41ad42133228edbb4, type: 3}
-  _flags: 8
+  _title: Wizard Hat
+  _desc: Mystical, pointed, starry cap
+  _icon: {fileID: 21300000, guid: 0317a15e9d5fe80479a256fcafdba1af, type: 3}
+  _equipLayerMask: 3
+  _flags: 4

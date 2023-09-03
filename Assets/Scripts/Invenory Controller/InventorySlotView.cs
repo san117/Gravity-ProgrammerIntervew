@@ -17,6 +17,9 @@ public class InventorySlotView : MonoBehaviour
     public bool IsEmpty => _currentItem == null;
     public ItemModel CurrentItem => _currentItem;
 
+    public delegate void OnSetItem(ItemModel itemModel);
+    public event OnSetItem _onSetItemEvent;
+
     [SerializeField] private UnityEvent _onSetItem;
     [SerializeField] private UnityEvent _onUnsetItem;
     #endregion
@@ -33,6 +36,8 @@ public class InventorySlotView : MonoBehaviour
             _onSetItem.Invoke();
         else
             _onUnsetItem.Invoke();
+
+        _onSetItemEvent?.Invoke(model);
 
         Paint();
     }

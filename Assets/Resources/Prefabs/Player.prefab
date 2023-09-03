@@ -230,6 +230,9 @@ MonoBehaviour:
   _money: 10
   _balanceText: {fileID: 0}
   _balanceView: {fileID: 0}
+  _headEquipmentSlot: {fileID: 0}
+  _chestEquipmentSlot: {fileID: 0}
+  _playerEquipment: {fileID: 11400000, guid: 8a694251223e97a4fa9be4a484c70b45, type: 2}
 --- !u!50 &367116757342355253
 Rigidbody2D:
   serializedVersion: 4

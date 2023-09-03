@@ -14,6 +14,12 @@ public class PlayerController : MonoBehaviour
     [Header("Components")]
     [SerializeField] private TextMeshProUGUI _balanceText;
     [SerializeField] private Animator _balanceView;
+    [SerializeField] private InventorySlotView _headEquipmentSlot;
+    [SerializeField] private InventorySlotView _chestEquipmentSlot;
+    [SerializeField] private InventoryModel _playerEquipment;
+
+    private ItemModel _headEquipment;
+    private ItemModel _chestEquipment;
 
     private Rigidbody2D _rb2d;
     private Animator _animator;
@@ -42,6 +48,12 @@ public class PlayerController : MonoBehaviour
     {
         _rb2d = gameObject.GetComponent<Rigidbody2D>();
         _animator = gameObject.GetComponent<Animator>();
+
+        _headEquipmentSlot._onSetItemEvent += EquipHead;
+        _chestEquipmentSlot._onSetItemEvent += EquipChest;
+
+        EquipHead(_playerEquipment.inventory[0]);
+        EquipChest(_playerEquipment.inventory[1]);
 
         DiplayBalance(3);
     }
@@ -90,6 +102,28 @@ public class PlayerController : MonoBehaviour
     public bool HasEnoughMoney(int amount)
     {
         return _money >= amount;
+    }
+
+    public void EquipHead(ItemModel model)
+    {
+        if (_headEquipment != null)
+            _animator.SetLayerWeight(_headEquipment.EquipLayerMask, 0);
+
+        _headEquipment = model;
+
+        if (_headEquipment != null)
+            _animator.SetLayerWeight(_headEquipment.EquipLayerMask, 1);
+    }
+
+    public void EquipChest(ItemModel model)
+    {
+        if (_chestEquipment != null)
+            _animator.SetLayerWeight(_chestEquipment.EquipLayerMask, 0);
+
+        _chestEquipment = model;
+
+        if (_chestEquipment != null)
+            _animator.SetLayerWeight(_chestEquipment.EquipLayerMask, 1);
     }
 
     public void DiplayBalance(float time)

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297437945c545c6499493d7de2d0f2eb, type: 3}
+  m_Name: Band Hat
+  m_EditorClassIdentifier: 
+  _title: Band Hat
+  _desc: Chic, modern, adjustable band.
+  _icon: {fileID: 21300000, guid: b6e6051e1000379468b58338432b584e, type: 3}
+  _equipLayerMask: 2
+  _flags: 4
