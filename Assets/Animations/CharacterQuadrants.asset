@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!206 &20600000
+BlendTree:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CharacterQuadrants
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: 7607299989598571604, guid: 61dad39ec16622349ab4d9fb066d5a02, type: 2}
+    m_Threshold: 0
+    m_Position: {x: 0, y: -1}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Horizontal Speed
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 2810307422687212171, guid: 61dad39ec16622349ab4d9fb066d5a02, type: 2}
+    m_Threshold: 0.33333334
+    m_Position: {x: 0, y: 1}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Horizontal Speed
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -2221025290423953729, guid: 61dad39ec16622349ab4d9fb066d5a02, type: 2}
+    m_Threshold: 0.6666667
+    m_Position: {x: 1, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Horizontal Speed
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -2473924030886987473, guid: 61dad39ec16622349ab4d9fb066d5a02, type: 2}
+    m_Threshold: 1
+    m_Position: {x: -1, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Horizontal Speed
+    m_Mirror: 0
+  m_BlendParameter: Horizontal Speed
+  m_BlendParameterY: Vertical Speed
+  m_MinThreshold: 0
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 1
+  m_NormalizedBlendValues: 0
+  m_BlendType: 1
