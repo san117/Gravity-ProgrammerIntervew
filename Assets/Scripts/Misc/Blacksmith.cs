@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Blacksmith : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem _sparks;
+
+    public void HitHammer()
+    {
+        _sparks.Play();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
