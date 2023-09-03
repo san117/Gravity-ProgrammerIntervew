@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
         if (targetAnimatorSpeed.magnitude > 0.3f)
             _animatorSpeed = targetAnimatorSpeed;
-        else if (_animatorSpeed.magnitude > 0.1f)
+        else if (_animatorSpeed.magnitude > 0.3f)
             _animatorSpeed = Vector2.MoveTowards(_animatorSpeed, Vector2.zero, Time.deltaTime * 5);
 
         _animator.SetFloat("Horizontal Speed", _animatorSpeed.x);
