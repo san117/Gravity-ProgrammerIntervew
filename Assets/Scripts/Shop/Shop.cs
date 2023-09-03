@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class Shop : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class Shop : MonoBehaviour
     [SerializeField] private Transform _content;
     [SerializeField] private TextMeshProUGUI _npcDialogue;
     [SerializeField] private InventoryController _internalInventory;
+    [SerializeField] private CoinsVFX _coinsVFX;
+    [SerializeField] private Transform _blacksmithNPC;
     [Header("Components / Tooltip")]
     [SerializeField] private TextMeshProUGUI _tooltip_tile;
     [SerializeField] private TextMeshProUGUI _tooltip_desc;
@@ -77,6 +80,10 @@ public class Shop : MonoBehaviour
         _internalInventory.SaveInventory();
         _internalInventory.RefreshInventory();
         UpdateMercancyView();
+
+        var vfx = Instantiate(_coinsVFX);
+
+        vfx.Init(mercancyInfo.buyPrice, 15, 100, MenuManager.Singleon.CoinBalancePosition, Camera.main.WorldToScreenPoint(_blacksmithNPC.position));
     }
 
     public void Sell(ItemModel model)
@@ -88,6 +95,12 @@ public class Shop : MonoBehaviour
 
             _internalInventory.SaveInventory();
             _internalInventory.RefreshInventory();
+
+            UpdateMercancyView();
+
+            var vfx = Instantiate(_coinsVFX);
+            
+            vfx.Init(mercancyInfo.sellPrice, 15, 100, Mouse.current.position.ReadValue(), MenuManager.Singleon.CoinBalancePosition);
         }
     }
 
