@@ -8,6 +8,9 @@ public class PlayerInputHandler : MonoBehaviour
     #region Fields
     [SerializeField] private InputActionAsset _playerControls;
     [SerializeField] private PlayerController _playerController;
+
+    [SerializeField] private InventoryController _personalInventory;
+    [SerializeField] private Shop _shop;
     #endregion
 
     #region Unity
@@ -21,11 +24,14 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void InventoryButtonPressed(InputAction.CallbackContext obj)
     {
-        var inventoryController = FindObjectOfType<InventoryController>(true);
+        if (_shop.IsOpen) return;
 
-        var isDisplaying = !inventoryController.IsDisplaying;
+        var isDisplaying = !_personalInventory.IsDisplaying;
 
-        inventoryController.SetDisplay(isDisplaying);
+        if (isDisplaying)
+            MenuManager.Singleon.OpenPersonalInventory();
+        else
+            MenuManager.Singleon.ClosePersonalInventory();
 
         if(isDisplaying)
         {

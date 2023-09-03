@@ -30,6 +30,10 @@ public class Shop : MonoBehaviour
 
     private bool _updatingTooltip;
 
+    private bool _shopOpen;
+
+    public bool IsOpen => _shopOpen;
+
     #endregion
 
     #region Unity
@@ -113,6 +117,22 @@ public class Shop : MonoBehaviour
         _tooltip_sellingPrice.text = CanSell(model, out var mercancyInfo) ? "$" + mercancyInfo.sellPrice : "<color=#FF5E00>You can't sell this item here</color>";
         _updatingTooltip = true;
 
+    }
+
+    public void OpenShop()
+    {
+        GetComponent<Animator>().SetBool("IsOpen", true);
+        _shopOpen = true;
+
+        PlayerController.Singleton.DiplayBalance(-1);
+    }
+
+    public void CloseShop()
+    {
+        GetComponent<Animator>().SetBool("IsOpen", false);
+        _shopOpen = false;
+
+        PlayerController.Singleton.DiplayBalance(1);
     }
     #endregion
 
